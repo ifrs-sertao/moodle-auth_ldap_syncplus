@@ -507,40 +507,49 @@ class auth_plugin_ldap_syncplus extends auth_plugin_ldap {
             parent::loginpage_hook(); // Call parent function to retain its functionality.
             return;
         }
+// TIAGO - REQUER DESATIVAR AS VALIDAÇÕES DE EMAIL
+        
+//         // Clean username parameter to make sure that its an email address.
+//         $email = clean_param($frm->username, PARAM_EMAIL);
 
-        // Clean username parameter to make sure that its an email address.
-        $email = clean_param($frm->username, PARAM_EMAIL);
+//         // If we don't have an email adress, there's nothing to do, call parent hook and return.
+//         if ($email == '' || strpos($email, '@') == false) {
+//             parent::loginpage_hook(); // Call parent function to retain its functionality.
+//             return;
+//         }
 
-        // If we don't have an email adress, there's nothing to do, call parent hook and return.
-        if ($email == '' || strpos($email, '@') == false) {
-            parent::loginpage_hook(); // Call parent function to retain its functionality.
-            return;
-        }
-
-        // If there is an existing useraccount with this email adress as email address (then a Moodle account already exists and
-        // the standard mechanism of $CFG->authloginviaemail will kick in automatically) or if there is an existing useraccount
-        // with this email adress as username (which is not forbidden, so this useraccount has to be used), call parent hook and
-        // return.
-        if ($DB->count_records_select('user', '(username = :p1 OR email = :p2) AND deleted = 0',
-                                        array('p1' => $email, 'p2' => $email)) > 0) {
-            parent::loginpage_hook(); // Call parent function to retain its functionality.
-            return;
-        }
+//         // If there is an existing useraccount with this email adress as email address (then a Moodle account already exists and
+//         // the standard mechanism of $CFG->authloginviaemail will kick in automatically) or if there is an existing useraccount
+//         // with this email adress as username (which is not forbidden, so this useraccount has to be used), call parent hook and
+//         // return.
+//         if ($DB->count_records_select('user', '(username = :p1 OR email = :p2) AND deleted = 0',
+//                                         array('p1' => $email, 'p2' => $email)) > 0) {
+//             parent::loginpage_hook(); // Call parent function to retain its functionality.
+//             return;
+//         }
 
         // Get auth plugin.
         $authplugin = get_auth_plugin('ldap_syncplus');
 
         // If there is no email field mapping configured, we don't know where we can find the email adress in LDAP,
-        // call parent hook and return.
-        if (empty($authplugin->config->field_map_email)) {
-            parent::loginpage_hook(); // Call parent function to retain its functionality.
-            return;
-        }
+//         // call parent hook and return.
+        
+// TIAGO - COMENTEI AQUI POIS SENÃO VOLTARIA PRA TELA DE LOGIN AO NÃO ACHAR UM EMAIL
+//         if (empty($authplugin->config->field_map_email)) {
+//             parent::loginpage_hook(); // Call parent function to retain its functionality.
+//             return;
+//         }
 
         // Prepare LDAP search.
         $contexts = explode(';', $authplugin->config->contexts);
-        $filter = '(&('.$authplugin->config->field_map_email.'='.ldap_filter_addslashes($email).')'.
-                $authplugin->config->objectclass.')';
+        
+// TIAGO - É AQUI QUE A MÁGICA ACONTECE
+//permite primeiro login com CN, UID e qualquer atributo válido que seja incluido no filtro LDAP abaixo
+        $filter = '(&(|(cn='.ldap_filter_addslashes($frm->username).')(uid='.ldap_filter_addslashes($frm->username).'))'.$authplugin->config->objectclass.')';
+
+        
+//         $filter = '(&('.$authplugin->config->field_map_email.'='.ldap_filter_addslashes($email).')'.
+//                 $authplugin->config->objectclass.')';
 
         // Connect to LDAP.
         $ldapconnection = $authplugin->ldap_connect();
