@@ -1,3 +1,63 @@
+## Adequações simples ao plugin LDAP Sync Plus para autenticação com mais de um atributo LDAP
+Com as modificações é possível definir ( provisioriamente) direto no código quais campos LDAP funcionarão para o login dos usuários, de forma unificada, sem criar novos perfis. Isso facila a transição de padrões de acesso como por exemplo parte de usuário usando CPF e outra parte Matrícula.
+
+### Exemplo de alteração em auth.php que viabiliza login pelo CN e pelo UID
+Além desses, o user_attribute definido nas configurações Web do plugin continua valendo.
+
+```code
+$filter = '(&(|(cn='.ldap_filter_addslashes($frm->username).')(uid='.ldap_filter_addslashes($frm->username).'))'.$authplugin->config->objectclass.')';
+```
+### Outras linhas que precisam ser alteradas no código
+Há algumas linhas relacionadas a opção de primeiro acesso via e-mail que precisam ser comentadas ( ou adequadas ) pois hoje implementam validações que inviabilizam nosso ajuste proposto. São elas:
+
+Testes em cima da variável email que acabam em return:
+
+```
+ // Clean username parameter to make sure that its an email address.
+        //$email = clean_param($frm->username, PARAM_EMAIL);
+
+        // If we don't have an email adress, there's nothing to do, call parent hook and return.
+        //if ($email == '' || strpos($email, '@') == false) {
+        //   parent::loginpage_hook(); // Call parent function to retain its functionality.
+        //    return;
+        //}
+
+        // If there is an existing useraccount with this email adress as email address (then a Moodle account already exists and
+        // the standard mechanism of $CFG->authloginviaemail will kick in automatically) or if there is an existing useraccount
+        // with this email adress as username (which is not forbidden, so this useraccount has to be used), call parent hook and
+        // return.
+        //if ($DB->count_records_select('user', '(username = :p1 OR email = :p2) AND deleted = 0',
+        //                                array('p1' => $email, 'p2' => $email)) > 0) {
+        //    parent::loginpage_hook(); // Call parent function to retain its functionality.
+        //    return;
+        //}
+
+```
+Mais um teste que acaba em return
+```
+ // If there is no email field mapping configured, we don't know where we can find the email adress in LDAP,
+        // call parent hook and return.
+        //if (empty($authplugin->config->field_map_email)) {
+        //    parent::loginpage_hook(); // Call parent function to retain its functionality.
+        //    return;
+        //}
+```
+A construção original da variável $filter também precisa ser **comentada**
+```
+ //$filter = '(&('.$authplugin->config->field_map_email.'='.ldap_filter_addslashes($email).')'.$authplugin->config->objectclass.')';
+```
+
+E aqui a nova configuração para variável **filter**
+
+```
+ // Permite primeiro login com CN, UID, etc apra além do atributo padrão configurado na interface Web do plugin
+ $filter = '(&(|(cn='.ldap_filter_addslashes($frm->username).')(postalCode='.ldap_filter_addslashes($frm->username).'))'.$authplugin->config->objectclass.')';
+```
+
+### Instalação com as adequações
+Convèm efetuar a [instalação do plugin seguindo os passos padrão a atentando](https://moodle.org/plugins/auth_ldap_syncplus) pra versão adequada. Somente após a instalação e ativação do plugin, faça as adequações sugeridas acima.
+
+
 moodle-auth_ldap_syncplus
 =========================
 
