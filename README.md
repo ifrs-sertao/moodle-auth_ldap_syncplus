@@ -57,6 +57,20 @@ E aqui a nova configuração para variável **filter**
 ### Instalação com as adequações
 Convèm efetuar a [instalação do plugin seguindo os passos padrão a atentando](https://moodle.org/plugins/auth_ldap_syncplus) pra versão adequada. Somente após a instalação e ativação do plugin, faça as adequações sugeridas acima.
 
+# A FAZER
+
+- [ ] Ajustar e re-ativar validações por email originais do plugin
+- [ ] Validar os demais formatos para o username
+- [ ] Ocultar via variável ambiente os atributos no LDAP
+- [ ] Entender porque os filter_maps não funcionaram (provável problema de sintaxe na criação do filtro)
+- [ ] Minificar o código que está cheio de comentários e espaço em branco
+
+
+
+///
+/////
+///////
+
 
 moodle-auth_ldap_syncplus
 =========================
