@@ -55,7 +55,7 @@ E aqui a nova configuração para variável **filter**
 ```
 
 ### Instalação com as adequações
-Convèm efetuar a [instalação do plugin seguindo os passos padrão a atentando](https://moodle.org/plugins/auth_ldap_syncplus) pra versão adequada. Somente após a instalação e ativação do plugin, faça as adequações sugeridas acima.
+Convém efetuar a [instalação do plugin seguindo os passos padrão Moodle](https://moodle.org/plugins/auth_ldap_syncplus), atentando pra versão adequada. **Somente após a instalação, ativação e validação do funcionamento do plugin, faça as adequações sugeridas acima**.
 
 # A FAZER
 
@@ -65,11 +65,9 @@ Convèm efetuar a [instalação do plugin seguindo os passos padrão a atentando
 - [ ] Entender porque os filter_maps não funcionaram (provável problema de sintaxe na criação do filtro)
 - [ ] Minificar o código que está cheio de comentários e espaço em branco
 
+#FIM ADEQUAÇÕES - Abaixo estão as orientações originais do plugin LDAP SYNC PLUS
 
 
-///
-/////
-///////
 
 
 moodle-auth_ldap_syncplus
