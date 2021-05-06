@@ -65,7 +65,7 @@ Convém efetuar a [instalação do plugin seguindo os passos padrão Moodle](htt
 - [ ] Entender porque os filter_maps não funcionaram (provável problema de sintaxe na criação do filtro)
 - [ ] Minificar o código que está cheio de comentários e espaço em branco
 
-##FIM ADEQUAÇÕES - Abaixo estão as orientações originais do plugin LDAP SYNC PLUS
+## FIM ADEQUAÇÕES - Abaixo estão as orientações originais do plugin LDAP SYNC PLUS
 
 
 
