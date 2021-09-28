@@ -1,5 +1,5 @@
 ## Adequações simples ao plugin LDAP Sync Plus para autenticação com mais de um atributo LDAP
-Com as modificações é possível definir ( provisioriamente) direto no código quais campos LDAP funcionarão para o login dos usuários, de forma unificada, sem criar novos perfis. Isso facila a transição de padrões de acesso como por exemplo parte de usuário usando CPF e outra parte Matrícula.
+Com as modificações é possível definir ( provisioriamente) direto no código quais atributos LDAP serão aceitos no login dos usuários, de forma unificada e sem criar novos perfis. Isso facila nos períodos entre transições no padrão de acesso como, por exemplo o fato de parte dos usuários utilizarem CPF e outra parte Matrícula.
 
 ### Exemplo de alteração em auth.php que viabiliza login pelo CN e pelo UID
 Além desses, o user_attribute definido nas configurações Web do plugin continua valendo.
