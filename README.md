@@ -1,3 +1,5 @@
+# AS ALTERAÇÕES ABAIXO FORAM SUBSTITUIDAS PELO [FORK ELABORADO POR derhelge](https://github.com/derhelge/moodle-auth_ldap_syncplus])
+
 ## Adequações simples ao plugin LDAP Sync Plus para autenticação com mais de um atributo LDAP
 Com as modificações é possível definir ( provisioriamente) direto no código quais atributos LDAP serão aceitos no login dos usuários, de forma unificada e sem criar novos perfis. Isso facila nos períodos entre transições no padrão de acesso como, por exemplo o fato de parte dos usuários utilizarem CPF e outra parte Matrícula.
 
